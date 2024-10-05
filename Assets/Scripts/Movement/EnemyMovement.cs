@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     //Waypoint Handling
     public GameObject entryPattern; //This should exist in the world
     public GameObject attackPatternPrefab; //This is a prefab dependant on original position
+    private GameObject attackPatternInstance;
     public Transform formationPosition;
     private int currentWaypointIndex = 0;
 
@@ -43,10 +44,7 @@ public class EnemyMovement : MonoBehaviour
     public void setAttackPattern(GameObject attackPattern)
     {
         this.attackPatternPrefab = attackPattern;
-        foreach (Transform child in attackPatternPrefab.transform)
-        {
-            attackPatternWaypoints.Add(child);
-        }
+
     }
 
     public void setFormationPosition(GameObject formationPosition)
@@ -60,9 +58,11 @@ public class EnemyMovement : MonoBehaviour
     {
         if (entryPattern != null){
             setEntryPattern(entryPattern);
-            transform.position = entryPatternWaypoints[currentWaypointIndex].transform.position;
-            entryPatternWaypoints.Add(formationPosition);        
+            transform.position = entryPatternWaypoints[currentWaypointIndex].transform.position;    
             waypoints = entryPatternWaypoints;
+        }
+        if (attackPatternPrefab != null){
+            setAttackPattern(attackPatternPrefab);
         }
     }
 
@@ -76,23 +76,22 @@ public class EnemyMovement : MonoBehaviour
             FollowFormation();
         }
         if (currentState == state.Attacking){
-            Attack();
+            AttackMovement();
         }
+    }
+
+    public void Enter(){
+        currentState = state.Entering;
     }
 
     void EntryMovement()
     {
+        waypoints = entryPatternWaypoints;
         FollowPath();
-        // If the enemy has reached a close enough position to the formation position
-        if (currentWaypointIndex == waypoints.Count - 1){
-            if (Vector3.Distance(transform.position, formationPosition.transform.position) < 0.1f)
-            {
-                currentState = state.Formation;
-                currentWaypointIndex = 0;
-            }
-            else {
-                MoveToFormation();
-            }
+        //If reached endpoint
+        if (currentWaypointIndex == waypoints.Count){
+            //done following
+            currentState = state.Formation;
         }
     }
 
@@ -109,7 +108,7 @@ public class EnemyMovement : MonoBehaviour
 
                 transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, moveSpeed * Time.deltaTime);
 
-                if (transform.position == waypoints[currentWaypointIndex].transform.position)
+                if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].transform.position) <= 0.1f)
                 {
                     currentWaypointIndex += 1;
                 }
@@ -129,16 +128,47 @@ public class EnemyMovement : MonoBehaviour
     }
 
     void FollowFormation()
-    {
-        transform.position = formationPosition.transform.position;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 100f * Time.deltaTime);
+    {       
+        currentWaypointIndex = 0;     
+        if (Vector3.Distance(transform.position, formationPosition.transform.position) > 0.1f)
+        {
+            MoveToFormation();
+        }
+        else 
+        {
+            transform.position = formationPosition.transform.position;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 100f * Time.deltaTime);
+        }
+
     }
 
-    void Attack()
+    public void Attack()
+    {
+        attackPatternInstance = Instantiate(attackPatternPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        attackPatternWaypoints = new List<Transform>();
+        foreach (Transform child in attackPatternInstance.transform)
+        {
+            attackPatternWaypoints.Add(child);
+        }
+        currentState = state.Attacking;
+    }
+
+    void AttackMovement()
     {
         waypoints = attackPatternWaypoints;
         FollowPath();
-        
+        if (currentWaypointIndex == waypoints.Count)
+        {
+            //If path ends outside of map, jump back up
+            if (transform.position.y <= -5.0f )
+            {
+                transform.position = formationPosition.transform.position + new Vector3(0, 3, 0);
+            }
+            
+            currentState = state.Formation;
+            Destroy(attackPatternInstance);
+            attackPatternInstance = null;
+        }
     }
 
     
