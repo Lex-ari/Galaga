@@ -11,6 +11,7 @@ public class TestManager : MonoBehaviour
         Formation,
         Attacking,
         Init,
+        SpawnGroup1,
     }
 
     public state currentState = state.Init;
@@ -39,6 +40,9 @@ public class TestManager : MonoBehaviour
             StartCoroutine(AlienFire());
             currentState = state.Init;
         }
+        if (currentState == state.SpawnGroup1){
+            SpawnPopUpGroup();
+        }
     }
 
     IEnumerator AlienFire()
@@ -46,5 +50,11 @@ public class TestManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         EnemyMissile alienMissileScript = alien.GetComponent<EnemyMissile>();
         alienMissileScript.FireOnce();
+    }
+
+
+    void SpawnPopUpGroup()
+    {
+        // EnemySpawnManager
     }
 }

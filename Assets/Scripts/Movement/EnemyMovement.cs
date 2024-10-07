@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject entryPattern; //This should exist in the world
     public GameObject attackPatternPrefab; //This is a prefab dependant on original position
     private GameObject attackPatternInstance;
-    public Transform formationPosition;
+    public GameObject formationPosition;
     private int currentWaypointIndex = 0;
 
     private List<Transform> entryPatternWaypoints = new List<Transform>();
@@ -38,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         {
             entryPatternWaypoints.Add(child);
         }
-        transform.position = entryPatternWaypoints[0].transform.position;
+        // transform.position = entryPatternWaypoints[0].transform.position;
     }
 
     public void setAttackPattern(GameObject attackPattern)
@@ -49,21 +49,37 @@ public class EnemyMovement : MonoBehaviour
 
     public void setFormationPosition(GameObject formationPosition)
     {
-        this.formationPosition = formationPosition.transform;
+        this.formationPosition = formationPosition;
+    }
+
+    public void setState(string newState)
+    {
+        if (newState == "Entering")
+        {
+            currentState = state.Entering;
+        }
+        if (newState == "Formation")
+        {
+            currentState = state.Formation;
+        }
+        if (newState == "Attacking")
+        {
+            currentState = state.Attacking;
+        }
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (entryPattern != null){
-            setEntryPattern(entryPattern);
-            transform.position = entryPatternWaypoints[currentWaypointIndex].transform.position;    
-            waypoints = entryPatternWaypoints;
-        }
-        if (attackPatternPrefab != null){
-            setAttackPattern(attackPatternPrefab);
-        }
+        // if (entryPattern != null){
+        //     setEntryPattern(entryPattern);
+        //     transform.position = entryPatternWaypoints[currentWaypointIndex].transform.position;    
+        //     waypoints = entryPatternWaypoints;
+        // }
+        // if (attackPatternPrefab != null){
+        //     setAttackPattern(attackPatternPrefab);
+        // }
     }
 
     // Update is called once per frame

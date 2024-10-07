@@ -8,7 +8,7 @@ public class EnemyMissile : MonoBehaviour
     public float timeBetweenShots = 0.2f;
 
     public GameObject missilePrefab;
-    public Vector3 missileOffset = new Vector3(0, -2f, 0);
+    public Vector3 missileOffset = new Vector3(0, 0f, 0);
 
     // Start is called before the first frame update
     void Start()
