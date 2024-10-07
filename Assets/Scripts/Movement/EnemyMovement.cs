@@ -59,15 +59,15 @@ public class EnemyMovement : MonoBehaviour
 
     public void setState(string newState)
     {
-        if (newState == "Entering")
+        if (newState == "entering")
         {
             currentState = state.entering;
         }
-        if (newState == "Formation")
+        if (newState == "formation")
         {
             currentState = state.formation;
         }
-        if (newState == "Attacking")
+        if (newState == "ttacking")
         {
             currentState = state.attacking;
         }

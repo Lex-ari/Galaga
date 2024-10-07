@@ -25,7 +25,8 @@ public class AlienManifest : MonoBehaviour
 
     public void removeAlienFromManifest(GameObject alien)
     {
-        alienManifest.Remove(alien);
+        bool success = alienManifest.Remove(alien);
+        Debug.Log(success);
     }
 
 

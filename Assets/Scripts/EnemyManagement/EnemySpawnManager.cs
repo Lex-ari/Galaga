@@ -147,9 +147,11 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 GameObject newAlien = instantiateEnemy(enemyColorOrder[i], entryPoint, enemyFormationPositions[i].gameObject, spawnPoint);
                 EnemyMovement enemyScript = newAlien.GetComponent<EnemyMovement>();
-                enemyScript.setState("Entering");
+                enemyScript.setState("entering");
                 alienManifestScript.addAlienToManifest(newAlien);
-                yield return new WaitForSeconds(0.2f);
+                DamageHandler alienDamageHandlerScript = newAlien.GetComponent<DamageHandler>();
+                alienDamageHandlerScript.addManifestReference(alienManifest);
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }
