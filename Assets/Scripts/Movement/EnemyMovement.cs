@@ -6,10 +6,10 @@ public class EnemyMovement : MonoBehaviour
 {//https://www.youtube.com/watch?v=am3IitICcyA
 
     //Waypoint Handling
-    public GameObject entryPattern; //This should exist in the world
-    public GameObject attackPatternPrefab; //This is a prefab dependant on original position
+    private GameObject entryPattern; //This should exist in the world
+    private GameObject attackPatternPrefab; //This is a prefab dependant on original position
     private GameObject attackPatternInstance;
-    public GameObject formationPosition;
+    private GameObject formationPosition;
     private int currentWaypointIndex = 0;
 
     private List<Transform> entryPatternWaypoints = new List<Transform>();
@@ -22,13 +22,13 @@ public class EnemyMovement : MonoBehaviour
     public float turnSpeed = 1000.0f;
 
     public enum state {
-        Entering,
-        Formation,
-        Attacking,
-        Init,
+        entering,
+        formation,
+        attacking,
+        init,
     }
 
-    public state currentState = state.Init;
+    public state currentState = state.init;
 
     
     public void setEntryPattern(GameObject entryPattern)
@@ -52,19 +52,24 @@ public class EnemyMovement : MonoBehaviour
         this.formationPosition = formationPosition;
     }
 
+    public GameObject getFormationPosition()
+    {
+        return this.formationPosition;
+    }
+
     public void setState(string newState)
     {
         if (newState == "Entering")
         {
-            currentState = state.Entering;
+            currentState = state.entering;
         }
         if (newState == "Formation")
         {
-            currentState = state.Formation;
+            currentState = state.formation;
         }
         if (newState == "Attacking")
         {
-            currentState = state.Attacking;
+            currentState = state.attacking;
         }
     }
 
@@ -85,33 +90,33 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentState == state.Entering){
-            EntryMovement();
+        if (currentState == state.entering){
+            entryMovement();
         }
-        if (currentState == state.Formation){
-            FollowFormation();
+        if (currentState == state.formation){
+            followFormation();
         }
-        if (currentState == state.Attacking){
-            AttackMovement();
+        if (currentState == state.attacking){
+            attackMovement();
         }
     }
 
-    public void Enter(){
-        currentState = state.Entering;
+    public void enter(){
+        currentState = state.entering;
     }
 
-    void EntryMovement()
+    void entryMovement()
     {
         waypoints = entryPatternWaypoints;
-        FollowPath();
+        followPath();
         //If reached endpoint
         if (currentWaypointIndex == waypoints.Count){
             //done following
-            currentState = state.Formation;
+            currentState = state.formation;
         }
     }
 
-    void FollowPath()
+    void followPath()
     {
         if (waypoints != null){
             if (currentWaypointIndex <= waypoints.Count - 1)
@@ -132,7 +137,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    void MoveToFormation()
+    void moveToFormation()
     {
         Vector3 pointTarget = formationPosition.transform.position - transform.position;
         float angle = Mathf.Atan2(pointTarget.y, pointTarget.x) * Mathf.Rad2Deg - 90f;
@@ -143,12 +148,12 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, formationPosition.transform.position, moveSpeed * Time.deltaTime);
     }
 
-    void FollowFormation()
+    void followFormation()
     {       
         currentWaypointIndex = 0;     
         if (Vector3.Distance(transform.position, formationPosition.transform.position) > 0.1f)
         {
-            MoveToFormation();
+            moveToFormation();
         }
         else 
         {
@@ -158,7 +163,7 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
-    public void Attack()
+    public void attack()
     {
         attackPatternInstance = Instantiate(attackPatternPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         attackPatternWaypoints = new List<Transform>();
@@ -166,13 +171,13 @@ public class EnemyMovement : MonoBehaviour
         {
             attackPatternWaypoints.Add(child);
         }
-        currentState = state.Attacking;
+        currentState = state.attacking;
     }
 
-    void AttackMovement()
+    void attackMovement()
     {
         waypoints = attackPatternWaypoints;
-        FollowPath();
+        followPath();
         if (currentWaypointIndex == waypoints.Count)
         {
             //If path ends outside of map, jump back up
@@ -181,7 +186,7 @@ public class EnemyMovement : MonoBehaviour
                 transform.position = formationPosition.transform.position + new Vector3(0, 3, 0);
             }
             
-            currentState = state.Formation;
+            currentState = state.formation;
             Destroy(attackPatternInstance);
             attackPatternInstance = null;
         }

@@ -29,6 +29,7 @@ public class EnemyPositionBreathing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initialPositionVector = transform.position;
         // center = transform.parent.gameObject;
         foreach (Transform child in transform)
         {
@@ -41,19 +42,23 @@ public class EnemyPositionBreathing : MonoBehaviour
     void Update()
     {
         if (currentState == formationState.Idle){
-
+            toInitPosition();
+            breathingPosition = 0;
+            rising = true;
         }
         if (currentState == formationState.Breathing)
         {
-            FormationBreathe();
+            formationBreathe();
+            updateBreathing();
         }
         if (currentState == formationState.Sliding)
         {
-
+            formationSlide();
+            updateBreathing();
         }
     }
 
-    void FormationBreathe()
+    void formationBreathe()
     {
         float ratioedBreathingPosition = breathingPosition * ratio;
 
@@ -63,7 +68,22 @@ public class EnemyPositionBreathing : MonoBehaviour
                 childrenInitPositions[i], 
                 new Vector3(1 + ratioedBreathingPosition, 1 + ratioedBreathingPosition, 0));
         }
+    }
 
+    void formationSlide()
+    {
+        float plusMinusRatio = breathingPosition * 2f - 1f;
+        Vector3 newPosition = initialPositionVector + new Vector3(plusMinusRatio, 0, 0);
+        transform.position = newPosition;
+    }
+
+    void toInitPosition()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, initialPositionVector, 0.25f * Time.deltaTime);
+    }
+
+    void updateBreathing()
+    {
         if (rising) {
             breathingPosition += Time.deltaTime / seconds;
         } else {
