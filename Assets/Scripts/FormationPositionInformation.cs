@@ -1,7 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum alienColor {
+    green,
+    yellow,
+    red,    
+    none,
+}
 public class FormationPositionInformation : MonoBehaviour
 {
     public int popUpGroup;
@@ -12,13 +17,9 @@ public class FormationPositionInformation : MonoBehaviour
     }
     public side sidePosition;
 
-    public enum color {
-        green,
-        yellow,
-        red,    
-    }
+ 
 
-    public color colorPosition;
+    public alienColor colorPosition;
 
 
     // Start is called before the first frame update
@@ -41,7 +42,7 @@ public class FormationPositionInformation : MonoBehaviour
         return sidePosition;
     }
 
-    public color getColor(){
+    public alienColor getColor(){
         return colorPosition;
     }
 }

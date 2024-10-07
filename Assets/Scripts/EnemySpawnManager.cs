@@ -30,16 +30,18 @@ public class EnemySpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnPopUpGroup();
+        // SpawnPopUpGroup();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (stage != 0)
+        {
+            SpawnPopUpGroup();
+            stage = 0;
+        }
     }
-
-
 
     // State 1:
         // 4 Yellow from Upper Right
@@ -53,60 +55,101 @@ public class EnemySpawnManager : MonoBehaviour
     // Stage 5:
         // 8 Yellow from Upper Left
     void SpawnPopUpGroup(){
-        List<Transform> currentStagePositions = GetFormationTransformsFromStage(stage);
+        List<Transform> stagePositions = GetFormationTransformsFromStage(stage);
         if (stage == 1)
         {
-            List<GameObject> stage1YellowGroup = new List<GameObject>();
-            List<GameObject> stage1RedGroup = new List<GameObject>();
-            foreach (Transform position in currentStagePositions)
-            {
-                FormationPositionInformation posInfo = position.GetComponent<FormationPositionInformation>();
-                GameObject newAlien;
-                if (posInfo.getColor() == FormationPositionInformation.color.yellow)
-                {
-                    newAlien = InstantiateEnemy("Yellow", EntryMiddleL, position.gameObject, spawnPointHigh);
-                    stage1YellowGroup.Add(newAlien);
-                }
-                else 
-                {
-                    newAlien = InstantiateEnemy("Red", EntryMiddleR, position.gameObject, spawnPointHigh);
-                    stage1RedGroup.Add(newAlien);
-                }
-            }
-            StartCoroutine(EnemyLocalGroupSpawner(stage1RedGroup));
-            StartCoroutine(EnemyLocalGroupSpawner(stage1YellowGroup));
+            List<alienColor> stage1RedGroup = new List<alienColor>{
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+            };
+            List<alienColor> stage1YellowGroup = new List<alienColor>{
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+            };
+            List<Transform> stage1Positions = SplitByColor(stagePositions, alienColor.red);
+            List<Transform> stage1RedPositions = stage1Positions.GetRange(0, 4);
+            List<Transform> stage1YellowPositions = stage1Positions.GetRange(4, 4);
+            StartCoroutine(EnemyLocalGroupSpawner(stage1RedGroup, stage1RedPositions, EntryMiddleL, spawnPointHigh));
+            StartCoroutine(EnemyLocalGroupSpawner(stage1YellowGroup, stage1YellowPositions, EntryMiddleR, spawnPointHigh));
         }
         else if (stage == 2)
         {
-            List<GameObject> stage2OrderGroup = new List<GameObject>();
-            List<Transform> stagePositionsCopy = new List<Transform>(currentStagePositions);
-
+            List<alienColor> stage2OrderGroup = new List<alienColor>{
+                alienColor.green,
+                alienColor.red,
+                alienColor.green,
+                alienColor.red,
+                alienColor.green,
+                alienColor.red,
+                alienColor.green,
+                alienColor.red,
+            };
+            List<Transform> stage2Positions = AlternateByColor(stagePositions, alienColor.green);
+            StartCoroutine(EnemyLocalGroupSpawner(stage2OrderGroup, stage2Positions, EntryLowerL, spawnPointLeft));
         }
         else if (stage == 3)
         {
-
+            List<alienColor> stage3OrderGroup = new List<alienColor>{
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+                alienColor.red,
+            };
+            StartCoroutine(EnemyLocalGroupSpawner(stage3OrderGroup, stagePositions, EntryLowerR, spawnPointRight));
         }
         else if (stage == 4)
         {
-
+            List<alienColor> stage4OrderGroup = new List<alienColor>{
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+            };
+            StartCoroutine(EnemyLocalGroupSpawner(stage4OrderGroup, stagePositions, EntryMiddleR, spawnPointHigh));
         }
         else if (stage == 5)
         {
-
+            List<alienColor> stage4OrderGroup = new List<alienColor>{
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+                alienColor.yellow,
+            };
+            StartCoroutine(EnemyLocalGroupSpawner(stage4OrderGroup, stagePositions, EntryMiddleL, spawnPointHigh));
         }
-
         stage++;
     }
 
-    IEnumerator EnemyLocalGroupSpawner(List<GameObject> enemyPopUpGroups)
+    IEnumerator EnemyLocalGroupSpawner(List<alienColor> enemyColorOrder, List<Transform> enemyFormationPositions, GameObject entryPoint, GameObject spawnPoint)
     {
-        foreach (GameObject enemy in enemyPopUpGroups)
-        {
-            EnemyMovement enemyScript = enemy.GetComponent<EnemyMovement>();
-            enemyScript.setState("Entering");
-            yield return new WaitForSeconds(0.2f);
-        }
+        List<Transform> stagingPositions = new List<Transform>(enemyFormationPositions);
         
+        if (enemyColorOrder.Count == enemyFormationPositions.Count)
+        {
+            for (int i = 0; i < enemyColorOrder.Count; i++)
+            {
+                GameObject newAlien = InstantiateEnemy(enemyColorOrder[i], entryPoint, enemyFormationPositions[i].gameObject, spawnPoint);
+                EnemyMovement enemyScript = newAlien.GetComponent<EnemyMovement>();
+                enemyScript.setState("Entering");
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
     }
 
     List<Transform> GetFormationTransformsFromStage(int stage)
@@ -124,19 +167,19 @@ public class EnemySpawnManager : MonoBehaviour
         return currentStagePositions;
     }
 
-    GameObject InstantiateEnemy(string color, GameObject entryPattern, GameObject formationPosition, GameObject spawnPoint)
+    GameObject InstantiateEnemy(alienColor color, GameObject entryPattern, GameObject formationPosition, GameObject spawnPoint)
     {
         GameObject newAlien;
-        if (color == "Yellow")
+        if (color == alienColor.yellow)
         {
             newAlien = Instantiate(yelAlienPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
 
         }         
-        else if (color == "Red")
+        else if (color == alienColor.red)
         {
             newAlien = Instantiate(redAlienPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }   
-        else if (color == "Green")
+        else if (color == alienColor.green)
         {
             newAlien = Instantiate(greAlienPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
         } 
@@ -148,5 +191,54 @@ public class EnemySpawnManager : MonoBehaviour
         newAlienMovement.setEntryPattern(entryPattern);
         newAlienMovement.setFormationPosition(formationPosition);
         return newAlien;
+    }
+
+    List<Transform> SplitByColor(List<Transform> positions, alienColor splitColor)
+    {
+        List<Transform> colorOne = new List<Transform>();
+        List<Transform> colorTwo = new List<Transform>();
+        foreach (Transform transform in positions)
+        {
+            FormationPositionInformation posInfo = transform.GetComponent<FormationPositionInformation>();
+            if (splitColor == posInfo.getColor())
+            {
+                colorOne.Add(transform);
+            }
+            else
+            {
+                colorTwo.Add(transform);
+            }
+        }
+        foreach (Transform transform in colorTwo)
+        {
+            colorOne.Add(transform);
+        }
+        return colorOne;
+    }
+
+    //Assumes that there is equal number of two colors in positions
+    List<Transform> AlternateByColor(List<Transform> positions, alienColor splitColor)
+    {
+        List<Transform> colorOne = new List<Transform>();
+        List<Transform> colorTwo = new List<Transform>();
+        foreach (Transform transform in positions)
+        {
+            FormationPositionInformation posInfo = transform.GetComponent<FormationPositionInformation>();
+            if (splitColor == posInfo.getColor())
+            {
+                colorOne.Add(transform);
+            }
+            else
+            {
+                colorTwo.Add(transform);
+            }
+        }
+        List<Transform> alternateColor = new List<Transform>();
+        for (int i = 0; i < colorOne.Count; i++)
+        {
+            alternateColor.Add(colorOne[i]);
+            alternateColor.Add(colorTwo[i]);
+        }
+        return alternateColor;
     }
 }
