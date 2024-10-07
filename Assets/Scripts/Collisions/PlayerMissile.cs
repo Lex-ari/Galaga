@@ -8,6 +8,7 @@ public class PlayerMissile : MonoBehaviour
     public float fireDelay = 1f;
     float cooldownTimer = 0.0f;
     float cooldownTimer2 = 0.0f;
+    public float timeBetweenShots = 0.2f;
 
     public GameObject missilePrefab;
     public Vector3 missileOffset = new Vector3(0, 2f, 0);
@@ -26,7 +27,7 @@ public class PlayerMissile : MonoBehaviour
         if (Input.GetButton("Fire1")){
             if (cooldownTimer <= 0){
                 cooldownTimer = fireDelay;
-                cooldownTimer2 = 0.2f;
+                cooldownTimer2 = timeBetweenShots;
 
                 Instantiate(missilePrefab, transform.position + missileOffset, transform.rotation);
             } 

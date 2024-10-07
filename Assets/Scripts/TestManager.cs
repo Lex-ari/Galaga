@@ -15,10 +15,13 @@ public class TestManager : MonoBehaviour
 
     public state currentState = state.Init;
 
+    EnemyMovement alienScript;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        alienScript = alien.GetComponent<EnemyMovement>();
     }
 
     // Update is called once per frame
@@ -31,9 +34,17 @@ public class TestManager : MonoBehaviour
             // alien.currentState = state.Formation;
         }
         if (currentState == state.Attacking){
-            EnemyMovement alienScript = alien.GetComponent<EnemyMovement>();
+            
             alienScript.Attack();
+            StartCoroutine(AlienFire());
             currentState = state.Init;
         }
+    }
+
+    IEnumerator AlienFire()
+    {
+        yield return new WaitForSeconds(0.5f);
+        EnemyMissile alienMissileScript = alien.GetComponent<EnemyMissile>();
+        alienMissileScript.FireOnce();
     }
 }
