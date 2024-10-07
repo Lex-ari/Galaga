@@ -28,12 +28,12 @@ public class AttackManager : MonoBehaviour
     {
         if (active == true)
         {
-            StartCoroutine(configureAndStartAttackPattern());
+            StartCoroutine(ConfigureAndStartAttackPattern());
             active = false;
         }
     }
 
-    IEnumerator configureAndStartAttackPattern()
+    IEnumerator ConfigureAndStartAttackPattern()
     {
         if (attackPattern == 0)
         {
@@ -41,46 +41,51 @@ public class AttackManager : MonoBehaviour
         }
         if (attackPattern == 1)
         {
-            enemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
+            EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
             yield return new WaitForSeconds(0.5f);
-            enemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
+            EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
         }
         if (attackPattern == 2)
         {
-            enemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
+            EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
             yield return new WaitForSeconds(1.0f);
-            enemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
+            EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
         }
         if (attackPattern == 3)
         {
-            enemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
+            EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
             yield return new WaitForSeconds(1.0f);
-            enemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
+            EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
         }
         if (attackPattern == 4)
         {
-            enemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
+            EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
             yield return new WaitForSeconds(0.5f);
-            enemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
+            EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
+        }
+        attackPattern++;
+        if (attackPattern > 4)
+        {
+            attackPattern = 0;
         }
     }
 
 
 
-    void enemyStartAttack(alienColor color, side sidePosition, int groupId, GameObject attackPattern)
+    void EnemyStartAttack(alienColor color, side sidePosition, int groupId, GameObject attackPattern)
     {
-        GameObject attacker = alienManifestScript.getAlienFittingParamters(color, sidePosition, groupId);
+        GameObject attacker = alienManifestScript.GetAlienFittingParamters(color, sidePosition, groupId);
         if (attacker != null)
         {
             EnemyMovement attackerMovement = attacker.GetComponent<EnemyMovement>();
-            attackerMovement.setAttackPattern(attackPattern);
-            attackerMovement.attack();
-            StartCoroutine(shootWhileAttack(attacker));
+            attackerMovement.SetAttackPattern(attackPattern);
+            attackerMovement.Attack();
+            StartCoroutine(ShootWhileAttack(attacker));
         }
 
     }
 
-    IEnumerator shootWhileAttack(GameObject attacker)
+    IEnumerator ShootWhileAttack(GameObject attacker)
     {
         EnemyMissile missleShoot = attacker.GetComponent<EnemyMissile>();
         yield return new WaitForSeconds(0.5f);

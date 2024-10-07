@@ -5,6 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    public GameObject attackManager;
+    public GameObject enemySpawnManager;
+    public GameObject enemyManifest;
+    private AttackManager attackManagerScript;
+    private EnemySpawnManager enemySpawnManagerScript;
+    private AlienManifest alienManifestScript;
+
     public static GameManager instance = null;
     public enum gameState {
         menu,
@@ -28,6 +35,10 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        enemySpawnManagerScript = enemySpawnManager.GetComponent<EnemySpawnManager>();
+        attackManagerScript = attackManager.GetComponent<AttackManager>();
+        alienManifestScript = enemyManifest.GetComponent<AlienManifest>();
     }
 
     // Update is called once per frame

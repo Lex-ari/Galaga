@@ -42,23 +42,23 @@ public class EnemyPositionBreathing : MonoBehaviour
     void Update()
     {
         if (currentState == formationState.Idle){
-            toInitPosition();
+            ToInitPosition();
             breathingPosition = 0;
             rising = true;
         }
         if (currentState == formationState.Breathing)
         {
-            formationBreathe();
-            updateBreathing();
+            FormationBreathe();
+            UpdateBreathing();
         }
         if (currentState == formationState.Sliding)
         {
-            formationSlide();
-            updateBreathing();
+            FormationSlide();
+            UpdateBreathing();
         }
     }
 
-    void formationBreathe()
+    void FormationBreathe()
     {
         float ratioedBreathingPosition = breathingPosition * ratio;
 
@@ -70,19 +70,19 @@ public class EnemyPositionBreathing : MonoBehaviour
         }
     }
 
-    void formationSlide()
+    void FormationSlide()
     {
         float plusMinusRatio = breathingPosition * 2f - 1f;
         Vector3 newPosition = initialPositionVector + new Vector3(plusMinusRatio, 0, 0);
         transform.position = newPosition;
     }
 
-    void toInitPosition()
+    void ToInitPosition()
     {
         transform.position = Vector2.MoveTowards(transform.position, initialPositionVector, 0.25f * Time.deltaTime);
     }
 
-    void updateBreathing()
+    void UpdateBreathing()
     {
         if (rising) {
             breathingPosition += Time.deltaTime / seconds;

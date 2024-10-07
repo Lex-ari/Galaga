@@ -18,7 +18,7 @@ public class DamageHandler : MonoBehaviour
     void Update()
     {
         if (health <= 0) {
-            die();
+            Die();
         }
     }
 
@@ -30,16 +30,16 @@ public class DamageHandler : MonoBehaviour
         }
     }
 
-    void die(){
+    void Die(){
         if (gameObject.tag == "Enemy")
         {
             AlienManifest manifest = enemyManifest.GetComponent<AlienManifest>();
-            manifest.removeAlienFromManifest(gameObject);
+            manifest.RemoveAlienFromManifest(gameObject);
         }
         Destroy(gameObject);
     }
 
-    public void addManifestReference(GameObject manifest)
+    public void AddManifestReference(GameObject manifest)
     {
         this.enemyManifest = manifest;
     }

@@ -18,12 +18,12 @@ public class AlienManifest : MonoBehaviour
         
     }
 
-    public void addAlienToManifest(GameObject alien)
+    public void AddAlienToManifest(GameObject alien)
     {
         alienManifest.Add(alien);
     }
 
-    public void removeAlienFromManifest(GameObject alien)
+    public void RemoveAlienFromManifest(GameObject alien)
     {
         bool success = alienManifest.Remove(alien);
         Debug.Log(success);
@@ -31,14 +31,18 @@ public class AlienManifest : MonoBehaviour
 
 
 
-    public GameObject getAlienFittingParamters(alienColor color, side sidePosition, int groupId)
+    public GameObject GetAlienFittingParamters(alienColor color, side sidePosition, int groupId)
     {
         for (int i = alienManifest.Count - 1; i >= 0; i--)
         {
-            FormationPositionInformation posInfo = alienManifest[i].GetComponent<EnemyMovement>().getFormationPosition().GetComponent<FormationPositionInformation>();
-            if (color == posInfo.getColor() && sidePosition == posInfo.getSidePosition())
+            EnemyMovement enemyMovement = alienManifest[i].GetComponent<EnemyMovement>();
+            FormationPositionInformation posInfo = enemyMovement.GetFormationPosition().GetComponent<FormationPositionInformation>();
+            if (color == posInfo.GetColor() && sidePosition == posInfo.GetSidePosition())
             {
-                return alienManifest[i];
+                if (enemyMovement.GetState() != EnemyMovement.state.attacking){
+                    return alienManifest[i];
+                }
+
             }
         }
         return null;

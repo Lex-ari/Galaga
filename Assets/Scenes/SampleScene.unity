@@ -2979,6 +2979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f788a13c995f4dd3a838a3ea983c1abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackManager: {fileID: 1190471513}
+  enemySpawnManager: {fileID: 10774134}
+  enemyManifest: {fileID: 248810074}
   currentGameState: 4
 --- !u!4 &1324263248
 Transform:

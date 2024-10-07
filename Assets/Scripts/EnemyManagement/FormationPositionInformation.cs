@@ -36,15 +36,15 @@ public class FormationPositionInformation : MonoBehaviour
         
     }
 
-    public int getPopUpGroup(){
+    public int GetPopUpGroup(){
         return popUpGroup;
     }
 
-    public side getSidePosition(){
+    public side GetSidePosition(){
         return sidePosition;
     }
 
-    public alienColor getColor(){
+    public alienColor GetColor(){
         return colorPosition;
     }
 }
