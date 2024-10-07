@@ -162,6 +162,8 @@ MonoBehaviour:
   entryMiddleL: {fileID: 599853799}
   entryLowerR: {fileID: 874833726}
   entryLowerL: {fileID: 362442303}
+  alienManifest: {fileID: 248810074}
+  stage: 0
 --- !u!4 &10774136
 Transform:
   m_ObjectHideFlags: 0
