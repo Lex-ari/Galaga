@@ -4,10 +4,30 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public static GameManager instance = null;
+    public enum gameState {
+        menu,
+        spawningEnemies,
+        enemiesAttacking,
+        respawn,
+        idle,
+    }
+
+    public gameState currentGameState = gameState.idle;
+
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

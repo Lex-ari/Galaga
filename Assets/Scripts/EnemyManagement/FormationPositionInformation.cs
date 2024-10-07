@@ -6,15 +6,17 @@ public enum alienColor {
     yellow,
     red,    
     none,
+}    
+public enum side {
+    left,
+    right,
 }
+
 public class FormationPositionInformation : MonoBehaviour
 {
     public int popUpGroup;
     
-    public enum side {
-        left,
-        right,
-    }
+
     public side sidePosition;
 
  

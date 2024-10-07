@@ -19,18 +19,19 @@ public class EnemySpawnManager : MonoBehaviour
     public GameObject entryMiddleL;
     public GameObject entryLowerR;
     public GameObject entryLowerL;
+    public GameObject alienManifest;
+    
+    private AlienManifest alienManifestScript;
+    public int stage = 0;
 
-
-
-
-    public int stage = 1;
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // SpawnPopUpGroup();
+        alienManifestScript = alienManifest.GetComponent<AlienManifest>();
     }
 
     // Update is called once per frame
@@ -147,6 +148,7 @@ public class EnemySpawnManager : MonoBehaviour
                 GameObject newAlien = instantiateEnemy(enemyColorOrder[i], entryPoint, enemyFormationPositions[i].gameObject, spawnPoint);
                 EnemyMovement enemyScript = newAlien.GetComponent<EnemyMovement>();
                 enemyScript.setState("Entering");
+                alienManifestScript.addAlienToManifest(newAlien);
                 yield return new WaitForSeconds(0.2f);
             }
         }
