@@ -47,6 +47,11 @@ public class DamageHandler : MonoBehaviour
             manifest.RemoveAlienFromManifest(gameObject);
             gameManagerScript.AddPoints(pointValue);
         }
+        if (gameObject.tag == "Player")
+        {
+            Debug.Log("Player to Game Manager Set Respawning");
+            gameManagerScript.SetRespawning();
+        }
         Destroy(gameObject);
     }
 

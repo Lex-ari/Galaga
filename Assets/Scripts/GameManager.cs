@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject formationPositions;
     public TMP_Text score;
     public TMP_Text centerStage;
+    public GameObject playerShip;
+
+    public Vector3 playerStartPosition;
 
 
     private EnemyPositionBreathing formationPositionsScript;
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
         enemiesAttacking,
         respawn,
         idle,
+        gameOver,
     }
 
     public int points = 0;
@@ -35,7 +39,11 @@ public class GameManager : MonoBehaviour
 
     public gameState currentGameState = gameState.idle;
 
+    private gameState holdDeathGameState;
+
     private Coroutine workingCoroutine = null;
+
+    public int lives = 3;
 
     void Awake()
     {
@@ -67,35 +75,43 @@ public class GameManager : MonoBehaviour
         {
             workingCoroutine = StartCoroutine(AttackEnemies());
         }
+        if (currentGameState != gameState.respawn)
+        {
+            holdDeathGameState = currentGameState;
+        }
         UpdatePointCount();
     }
 
     IEnumerator SpawnEnemies(){
-        while (currentGameState == gameState.spawningEnemies)
+        bool complete = false;
+        while (!complete)
         {
-            bool spawnSuccess = enemySpawnManagerScript.SpawnPopUpGroup();
-            // Debug.Log("spawnEnemies");
-            if (spawnSuccess)
+            if (currentGameState == gameState.spawningEnemies)
             {
-                yield return new WaitForSeconds(4.5f);
+                bool spawnSuccess = enemySpawnManagerScript.SpawnPopUpGroup();
+                // Debug.Log("spawnEnemies");
+                if (spawnSuccess)
+                {
+                    yield return new WaitForSeconds(4.5f);
+                }
+                else
+                {
+                    currentGameState = gameState.enemiesAttacking;
+                    formationPositionsScript.setFormationIdle();
+                    workingCoroutine = null;
+                    break;
+                }
             }
-            else
-            {
-                currentGameState = gameState.enemiesAttacking;
-                formationPositionsScript.setFormationIdle();
-                workingCoroutine = null;
-            }
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
     IEnumerator AttackEnemies()
     {
         yield return new WaitForSeconds(2.0f);
-        while (currentGameState == gameState.enemiesAttacking)
-        {
-            attackManagerScript.DoAnAttack();
-            yield return new WaitForSeconds(5.0f);
-        }
+        attackManagerScript.DoAnAttack();
+        yield return new WaitForSeconds(5.0f);
+        workingCoroutine = null;
     }
 
     public void AddPoints(int points)
@@ -106,5 +122,45 @@ public class GameManager : MonoBehaviour
     private void UpdatePointCount()
     {
         score.text = points.ToString();
+    }
+
+    public void SetRespawning()
+    {
+        currentGameState = gameState.respawn;
+        StartCoroutine(RespawnHandler());
+    }
+    
+    IEnumerator RespawnHandler()
+    {
+        yield return new WaitForSeconds(5.0f);
+        if (lives > 0)
+        {
+            Debug.Log("Respawn Handler Spawning Player");
+            GameObject player = spawnPlayer();
+            StartCoroutine(StartStageProcess(player));
+            lives -= 1;
+        }
+        else 
+        {
+            // gameover
+        }
+    }
+
+    GameObject spawnPlayer()
+    {
+        GameObject player = Instantiate(playerShip, playerStartPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
+        return player;
+    }
+
+    IEnumerator StartStageProcess(GameObject player)
+    {
+        Debug.Log("Doing Stage Process");
+        centerStage.enabled = true;
+        centerStage.text = ("READY");
+        yield return new WaitForSeconds(2.0f);
+        centerStage.enabled = false;
+        PlayerMovement playerMovementScript = player.GetComponent<PlayerMovement>();
+        playerMovementScript.SetMovementProperty(true);
+        currentGameState = holdDeathGameState;
     }
 }

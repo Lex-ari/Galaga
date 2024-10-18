@@ -3324,8 +3324,11 @@ MonoBehaviour:
   formationPositions: {fileID: 1725121325}
   score: {fileID: 518039490}
   centerStage: {fileID: 2030528667}
+  playerShip: {fileID: 3657740689743071073, guid: 8e295a676d985701a8f2c27a6a620850, type: 3}
+  playerStartPosition: {x: 0, y: -4, z: 0}
   points: 0
   currentGameState: 4
+  lives: 3
 --- !u!4 &1324263248
 Transform:
   m_ObjectHideFlags: 0
