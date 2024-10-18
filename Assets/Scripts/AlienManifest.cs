@@ -6,6 +6,7 @@ public class AlienManifest : MonoBehaviour
 {
 
     private List<GameObject> alienManifest = new List<GameObject>();
+    private Queue<GameObject> recentAliens = new Queue<GameObject>();
 
     void Awake()
     {
@@ -26,7 +27,7 @@ public class AlienManifest : MonoBehaviour
     public void RemoveAlienFromManifest(GameObject alien)
     {
         bool success = alienManifest.Remove(alien);
-        Debug.Log(success);
+        // Debug.Log(success);
     }
 
 
@@ -35,17 +36,48 @@ public class AlienManifest : MonoBehaviour
     {
         for (int i = alienManifest.Count - 1; i >= 0; i--)
         {
-            EnemyMovement enemyMovement = alienManifest[i].GetComponent<EnemyMovement>();
-            FormationPositionInformation posInfo = enemyMovement.GetFormationPosition().GetComponent<FormationPositionInformation>();
-            if (color == posInfo.GetColor() && sidePosition == posInfo.GetSidePosition())
+            if (!IsRecentOrNotMinimum(alienManifest[i]))
             {
-                if (enemyMovement.GetState() != EnemyMovement.state.attacking){
-                    return alienManifest[i];
-                }
+                EnemyMovement enemyMovement = alienManifest[i].GetComponent<EnemyMovement>();
+                FormationPositionInformation posInfo = enemyMovement.GetFormationPosition().GetComponent<FormationPositionInformation>();
+                if (color == posInfo.GetColor() && sidePosition == posInfo.GetSidePosition())
+                {
+                    if (enemyMovement.GetState() != EnemyMovement.state.attacking)
+                    {
+                        AddToRecentsQueue(alienManifest[i]);
+                        return alienManifest[i];
+                    }
 
+                }
             }
+
         }
         return null;
+    }
+
+    private bool IsRecentOrNotMinimum(GameObject alien)
+    {
+        if (alienManifest.Count <= recentAliens.Count)
+        {
+            return false;
+        }
+        if (recentAliens.Contains(alien))
+        {
+            Debug.Log("returned did Contain");
+            return true;
+        }
+        return false;
+    }
+
+    private void AddToRecentsQueue(GameObject alien)
+    {
+        Debug.Log("add to recentAliens");
+        recentAliens.Enqueue(alien);
+        if (recentAliens.Count >= 10)
+        {
+            Debug.Log("removed from recentAliens");
+            recentAliens.Dequeue();
+        }
     }
     
 }

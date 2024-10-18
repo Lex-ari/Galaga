@@ -16,6 +16,7 @@ public class AttackManager : MonoBehaviour
     public bool active = false;
     
     private int attackPattern = 1;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +27,16 @@ public class AttackManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active == true)
-        {
-            StartCoroutine(ConfigureAndStartAttackPattern());
-            active = false;
-        }
+        // if (active == true)
+        // {
+        //     StartCoroutine(ConfigureAndStartAttackPattern());
+        //     active = false;
+        // }
+    }
+
+    public void DoAnAttack()
+    {
+        StartCoroutine(ConfigureAndStartAttackPattern());
     }
 
     IEnumerator ConfigureAndStartAttackPattern()

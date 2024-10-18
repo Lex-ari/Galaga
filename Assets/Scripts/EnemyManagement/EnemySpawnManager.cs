@@ -22,7 +22,7 @@ public class EnemySpawnManager : MonoBehaviour
     public GameObject alienManifest;
     
     private AlienManifest alienManifestScript;
-    public int stage = 0;
+    public int stage = 1;
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
 
@@ -37,11 +37,7 @@ public class EnemySpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stage != 0)
-        {
-            SpawnPopUpGroup();
-            stage = 0;
-        }
+
     }
 
     // State 1:
@@ -55,7 +51,7 @@ public class EnemySpawnManager : MonoBehaviour
         // 8 Yellow from Upper Rgiht
     // Stage 5:
         // 8 Yellow from Upper Left
-    void SpawnPopUpGroup(){
+    public bool SpawnPopUpGroup(){
         List<Transform> stagePositions = GetFormationTransformsFromStage(stage);
         if (stage == 1)
         {
@@ -134,7 +130,12 @@ public class EnemySpawnManager : MonoBehaviour
             };
             StartCoroutine(EnemyLocalGroupSpawner(stage4OrderGroup, stagePositions, entryMiddleL, spawnPointHigh));
         }
+        else
+        {
+            return false;
+        }
         stage++;
+        return true;
     }
 
     IEnumerator EnemyLocalGroupSpawner(List<alienColor> enemyColorOrder, List<Transform> enemyFormationPositions, GameObject entryPoint, GameObject spawnPoint)

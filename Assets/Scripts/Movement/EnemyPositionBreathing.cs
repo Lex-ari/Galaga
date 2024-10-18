@@ -79,7 +79,11 @@ public class EnemyPositionBreathing : MonoBehaviour
 
     void ToInitPosition()
     {
-        transform.position = Vector2.MoveTowards(transform.position, initialPositionVector, 0.25f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, initialPositionVector, 1f * Time.deltaTime);
+        if (Vector3.Distance(transform.position, initialPositionVector) <= 0.1f)
+        {
+            currentState = formationState.Breathing;
+        }
     }
 
     void UpdateBreathing()
@@ -97,5 +101,10 @@ public class EnemyPositionBreathing : MonoBehaviour
         if (breathingPosition <= 0.0f){
             rising = true;
         }
+    }
+
+    public void setFormationIdle()
+    {
+        currentState = formationState.Idle;
     }
 }
