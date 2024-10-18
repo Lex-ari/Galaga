@@ -1,3 +1,14 @@
+/***************************************************************
+file: EnemyMissile.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program handles the behavior of an enemy missile
+attack pattern. This includes shooting two missiles.
+
+****************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,11 +33,15 @@ public class EnemyMissile : MonoBehaviour
 
     }
 
+    //function: FirePattern
+    //purpose: Public visible call to call coroutine to fire twice.
     public void FirePattern()
     {
         StartCoroutine(FireTwice());
     }
 
+    //function: FireTwice
+    //purpose: Fires a missile... twice.
     IEnumerator FireTwice()
     {
         FireOnce();
@@ -34,6 +49,8 @@ public class EnemyMissile : MonoBehaviour
         FireOnce();
     }
 
+    //function: FireOnce
+    //purpose: Instantiates a new missile
     public void FireOnce()
     {
         Instantiate(missilePrefab, transform.position + missileOffset, Quaternion.Euler(new Vector3(0, 0, 0)));

@@ -1,3 +1,16 @@
+/***************************************************************
+file: EnemyMovement.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program defines the behavior for any given
+enemy, which includes multiple states mainly entering,
+formation, and attacking.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +43,8 @@ public class EnemyMovement : MonoBehaviour
 
     public state currentState = state.init;
 
-    
+    //function:  SetEntryPattern
+    //purpose: Sets the Alien's entry pattern from offscreen to play area.
     public void SetEntryPattern(GameObject entryPattern)
     {
         this.entryPattern = entryPattern;
@@ -41,22 +55,31 @@ public class EnemyMovement : MonoBehaviour
         // transform.position = entryPatternWaypoints[0].transform.position;
     }
 
+    //function: SetAttackPattern
+    //purpose: Sets Alien's Attack Pattern
     public void SetAttackPattern(GameObject attackPattern)
     {
         this.attackPatternPrefab = attackPattern;
 
     }
 
+    //function: SetFormationPosition
+    //purpose: Set Alien's Formation Position
     public void SetFormationPosition(GameObject formationPosition)
     {
         this.formationPosition = formationPosition;
     }
 
+    //function: GetFormationPosition
+    //purpose: Gets Alien's Formation Position
     public GameObject GetFormationPosition()
     {
         return this.formationPosition;
     }
 
+    //fucntion: SetState
+    //purpose: Parses a String and sets the current state of the alien to one
+    //of the matching string states.
     public void SetState(string newState)
     {
         if (newState == "entering")
@@ -106,10 +129,16 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //function: Enter
+    //purpose: Public Visible function to set entering state
     public void Enter(){
         currentState = state.entering;
     }
 
+    //function: EntryMovement
+    //purpose: Loads waypoints and commands to follow path and afterwards
+    //follow formation. 
+    // Wrapper for FollowPath to do state.formation afterwards.
     void EntryMovement()
     {
         waypoints = entryPatternWaypoints;
@@ -121,6 +150,9 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //function: FollowPath
+    //purpose: Moves the GameObject to each waypoint in waypoints.
+    // This handles translation and rotation 
     void FollowPath()
     {
         if (waypoints != null){
@@ -142,6 +174,8 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //function: MoveToFormation
+    //purpose: Speedy slew to formation, meant to be after completing path
     void MoveToFormation()
     {
         Vector3 pointTarget = formationPosition.transform.position - transform.position;
@@ -153,6 +187,9 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, formationPosition.transform.position, moveSpeed * Time.deltaTime);
     }
 
+    //function: FollowFormation
+    //purpose: Slow slew to formation, handles when current gameobject
+    //transform and formation transform distance is negligble but not 0.
     void FollowFormation()
     {       
         currentWaypointIndex = 0;     
@@ -168,6 +205,9 @@ public class EnemyMovement : MonoBehaviour
 
     }
 
+    //function: Attack
+    //purpose: Sets up Attack Pattern and follows pattern, and attack by
+    //missiles.
     public void Attack()
     {
         attackPatternInstance = Instantiate(attackPatternPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -179,6 +219,8 @@ public class EnemyMovement : MonoBehaviour
         currentState = state.attacking;
     }
 
+    //function: AttackMovement
+    //purpose: Wrapper for FollowPath to handle Alien off-screen movement
     void AttackMovement()
     {
         waypoints = attackPatternWaypoints;

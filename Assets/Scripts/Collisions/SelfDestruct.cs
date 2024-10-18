@@ -1,3 +1,16 @@
+/***************************************************************
+file: SelfDestruct.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program Deinstnatiates a Game Object, primarily
+missiles, once they have persisted for 5 seconds. These
+GameObjects should already be out of the visible frame.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

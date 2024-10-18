@@ -1,3 +1,15 @@
+/***************************************************************
+file: AttackManager.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program defines specific attack patterns per
+wave of attack.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,11 +46,16 @@ public class AttackManager : MonoBehaviour
         // }
     }
 
+    //function: DoAnAttack
+    //purpose: Public visible function to start coroutine ConfigureAndStartAttackPattern().
     public void DoAnAttack()
     {
         StartCoroutine(ConfigureAndStartAttackPattern());
     }
 
+    //function: ConfigureAndStartAttackPattern
+    //purpose: Lists out different enemy attack patterns and cycles through
+    //them when called.
     IEnumerator ConfigureAndStartAttackPattern()
     {
         if (attackPattern == 0)
@@ -76,8 +93,9 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-
-
+    //function: EnemyStartAttack
+    //purpose: Retrieves an attacking unit and sets its attack pattern
+    //according to the color and position in its formation.
     void EnemyStartAttack(alienColor color, side sidePosition, int groupId, GameObject attackPattern)
     {
         GameObject attacker = alienManifestScript.GetAlienFittingParamters(color, sidePosition, groupId);

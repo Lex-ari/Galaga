@@ -1,3 +1,15 @@
+/***************************************************************
+file: EnemySpawnManager.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program manages the spawning and entry of
+different waves of enemies.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +63,10 @@ public class EnemySpawnManager : MonoBehaviour
         // 8 Yellow from Upper Rgiht
     // Stage 5:
         // 8 Yellow from Upper Left
+
+    //function: SpawnPopUpGroup
+    //purpose: Lists out different configuration of enemies for each wave and
+    //cycles through them when called.
     public bool SpawnPopUpGroup(){
         List<Transform> stagePositions = GetFormationTransformsFromStage(stage);
         if (stage == 1)
@@ -138,6 +154,9 @@ public class EnemySpawnManager : MonoBehaviour
         return true;
     }
 
+    //function: EnemyLocalGroupSpawner
+    //purpose: This retrieves the order of enemies to instantiate and will
+    //set them up for their requested entry pattern.
     IEnumerator EnemyLocalGroupSpawner(List<alienColor> enemyColorOrder, List<Transform> enemyFormationPositions, GameObject entryPoint, GameObject spawnPoint)
     {
         List<Transform> stagingPositions = new List<Transform>(enemyFormationPositions);
@@ -157,6 +176,9 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    //function: GetFormationTransformsFromStage
+    //purpose: This appends all alien formations in the current scene into
+    //a list. This will return the proper positions for a given stage.
     List<Transform> GetFormationTransformsFromStage(int stage)
     {
         List<Transform> currentStagePositions = new List<Transform>();
@@ -172,6 +194,8 @@ public class EnemySpawnManager : MonoBehaviour
         return currentStagePositions;
     }
 
+    //function: InstantiateEnemy
+    //purpose: Instantiates an enemy based on color, pattern, position, and spawn.
     GameObject InstantiateEnemy(alienColor color, GameObject entryPattern, GameObject formationPosition, GameObject spawnPoint)
     {
         GameObject newAlien;
@@ -198,6 +222,9 @@ public class EnemySpawnManager : MonoBehaviour
         return newAlien;
     }
 
+    //function: SplitByColor
+    //purpose: Takes in a List<> of positions and returns a sorted list
+    //where the first half is the split color.
     List<Transform> SplitByColor(List<Transform> positions, alienColor splitColor)
     {
         List<Transform> colorOne = new List<Transform>();
@@ -222,6 +249,9 @@ public class EnemySpawnManager : MonoBehaviour
     }
 
     //Assumes that there is equal number of two colors in positions
+    //function: AlternateByColor
+    //purpose: Takes in a list<> of positions and returns a sorted list
+    //where every other index of positions is the requested color.
     List<Transform> AlternateByColor(List<Transform> positions, alienColor splitColor)
     {
         List<Transform> colorOne = new List<Transform>();
