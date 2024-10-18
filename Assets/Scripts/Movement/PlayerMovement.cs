@@ -1,3 +1,15 @@
+/***************************************************************
+file: PlayerMovement.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program defines the behavior for the movement of
+the player. Allows the player to move left and right.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    //function: SetMovementProperty
+    //purpose: Enables / Disables the player movement
     public void SetMovementProperty(bool value)
     {
         movementEnabled = value;

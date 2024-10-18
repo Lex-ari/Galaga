@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
-{//https://www.youtube.com/watch?v=am3IitICcyA
+{
 
     //Waypoint Handling
     private GameObject entryPattern; //This should exist in the world

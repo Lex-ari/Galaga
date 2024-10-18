@@ -1,3 +1,15 @@
+/***************************************************************
+file: MisslePropulsion.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program defines the movement behavior for a 
+missile.
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

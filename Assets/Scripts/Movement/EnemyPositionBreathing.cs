@@ -1,3 +1,17 @@
+/***************************************************************
+file: EnemyPositionBreathing.cs
+author: Alex Mariano
+class: CS 4700 – Game Development
+assignment: program 1
+date last modified: 10/18/2024
+
+purpose: This program manages the movement of the formation
+depending on the current state. This includes the formation
+sliding left and right, as well as "breathing" from the
+center
+
+****************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +72,9 @@ public class EnemyPositionBreathing : MonoBehaviour
         }
     }
 
+    //function: FormationBreathe
+    //purpose: This translates all formation positions in the main
+    //formation object to do their new breathing position in time.
     void FormationBreathe()
     {
         float ratioedBreathingPosition = breathingPosition * ratio;
@@ -70,6 +87,9 @@ public class EnemyPositionBreathing : MonoBehaviour
         }
     }
 
+    //function: FormationSlide
+    //purpose: This translates the main formation gameobject left and right
+    //according to the current time ratio.
     void FormationSlide()
     {
         float plusMinusRatio = breathingPosition * 2f - 1f;
@@ -77,6 +97,9 @@ public class EnemyPositionBreathing : MonoBehaviour
         transform.position = newPosition;
     }
 
+    //function: ToInitPosition
+    //purpose: This translates the main formation GameObject to its original
+    //position so that it is center screen.
     void ToInitPosition()
     {
         transform.position = Vector2.MoveTowards(transform.position, initialPositionVector, 1f * Time.deltaTime);
@@ -86,6 +109,8 @@ public class EnemyPositionBreathing : MonoBehaviour
         }
     }
 
+    //function: UpdateBreathing
+    //purpose: This updates the time ratio for the breathing / sliding pattern
     void UpdateBreathing()
     {
         if (rising) {
