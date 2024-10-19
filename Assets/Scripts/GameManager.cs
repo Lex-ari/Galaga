@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     private int highScore;
 
-    void Awake()
+    void Start()
     {
         // if (instance == null)
         // {
@@ -244,8 +244,9 @@ public class GameManager : MonoBehaviour
     //purpose: Sets HiScore text in the HUD 
     void SetHighScoreText()
     {
-        PlayerPrefs.GetInt("highscore", highScore);
+        highScore = scoreManagerScript.GetHighScore();
         hiScoreText.text = highScore.ToString();
+        Debug.Log("highscoretext " + highScore);
     }
     
 }

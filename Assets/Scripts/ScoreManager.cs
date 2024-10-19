@@ -43,6 +43,7 @@ public class ScoreManager : MonoBehaviour
         hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     
         highScore = PlayerPrefs.GetInt("highscore", highScore);
+        Debug.Log("got Hiscore: " + highScore);
     }
     // Start is called before the first frame update
     void Start()

@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3682db78cc68cd719bfccd8d985c33c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hiscoreText: {fileID: 1038919668}
+  hiscoreText: {fileID: 518039490}
   pushSpaceKeyText: {fileID: 2030528667}
 --- !u!4 &1302190588
 Transform:

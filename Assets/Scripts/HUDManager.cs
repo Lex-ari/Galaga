@@ -68,14 +68,14 @@ public class HUDManager : MonoBehaviour
 
     //function: UpdateHighScore
     //purpose: Updates the High Score if the received score is higher.
-    public void UpdateHighScore(int newScore)
+    void UpdateHighScore()
     {
         hiscoreText.text = scoreManagerScript.GetHighScore().ToString();
     }
 
     //function: UpdateLastScore
     //purpose: Updates the Last Score Text
-    public void UpdateLastScore(int lastScore)
+    void UpdateLastScore()
     {
     }
 }
