@@ -147,7 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02645cf2161be1ec4903f7cbf56b1622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  gameManager: {fileID: 0}
+  pointValue: 100
+  secondaryColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!50 &3908541931794393544
 Rigidbody2D:
   serializedVersion: 4
@@ -203,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenShots: 0.2
-  missilePrefab: {fileID: 5915079493043187090, guid: 5ecd41b65e6536f4f9384a0fcf70486f, type: 3}
+  missilePrefab: {fileID: 5915079493043187090, guid: a2d313c6c846c180eb8b518c4e2b1303, type: 3}
   missileOffset: {x: 0, y: -1, z: 0}
 --- !u!1 &7309683283517283324
 GameObject:

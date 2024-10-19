@@ -18,7 +18,7 @@ using UnityEngine;
 public class DamageHandler : MonoBehaviour
 {
 
-    private int health = 1;
+    public int health = 1;
     private GameObject enemyManifest;
     public GameObject gameManager;
     private GameManager gameManagerScript;
@@ -77,5 +77,5 @@ public class DamageHandler : MonoBehaviour
     public void AddManifestReference(GameObject manifest)
     {
         this.enemyManifest = manifest;
-    }
+    }   
 }

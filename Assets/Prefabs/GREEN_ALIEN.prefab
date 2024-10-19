@@ -179,6 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
+  gameManager: {fileID: 0}
+  pointValue: 500
   secondaryColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!50 &842141828675244686
 Rigidbody2D:
@@ -235,5 +237,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenShots: 0.2
-  missilePrefab: {fileID: 5915079493043187090, guid: 5ecd41b65e6536f4f9384a0fcf70486f, type: 3}
+  missilePrefab: {fileID: 5915079493043187090, guid: a2d313c6c846c180eb8b518c4e2b1303, type: 3}
   missileOffset: {x: 0, y: -1, z: 0}

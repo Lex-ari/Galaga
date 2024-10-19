@@ -107,4 +107,9 @@ public class AlienManifest : MonoBehaviour
         }
     }
     
+    public int GetNumberOfAliveAliens()
+    {
+        return alienManifest.Count;
+    }
+    
 }

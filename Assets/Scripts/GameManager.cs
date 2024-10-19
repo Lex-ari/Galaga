@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject formationPositions;
     public TMP_Text score;
     public TMP_Text centerStage;
+    public TMP_Text hiScoreText;
     public GameObject playerShip;
 
     public Vector3 playerStartPosition;
@@ -38,6 +40,8 @@ public class GameManager : MonoBehaviour
     private AttackManager attackManagerScript;
     private EnemySpawnManager enemySpawnManagerScript;
     private AlienManifest alienManifestScript;
+
+    private ScoreManager scoreManagerScript;
 
     public static GameManager instance = null;
     public enum gameState {
@@ -58,25 +62,32 @@ public class GameManager : MonoBehaviour
 
     private Coroutine workingCoroutine = null;
 
-    public int lives = 3;
+    public int lives = 1;
+
+    private int highScore;
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        // if (instance == null)
+        // {
+        //     instance = this;
+        // }
+        // else if (instance != this)
+        // {
+        //     Destroy(gameObject);
+        // }
 
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
 
         enemySpawnManagerScript = enemySpawnManager.GetComponent<EnemySpawnManager>();
         attackManagerScript = attackManager.GetComponent<AttackManager>();
         alienManifestScript = enemyManifest.GetComponent<AlienManifest>();
         formationPositionsScript = formationPositions.GetComponent<EnemyPositionBreathing>();
+
+        scoreManagerScript = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+
+        InitScene();
+        SetHighScoreText();
     }
 
     // Update is called once per frame
@@ -95,6 +106,7 @@ public class GameManager : MonoBehaviour
             holdDeathGameState = currentGameState;
         }
         UpdatePointCount();
+        CheckRemainingaAliens();
     }
 
     //function: SpawnEnemies
@@ -175,6 +187,8 @@ public class GameManager : MonoBehaviour
         else 
         {
             // gameover
+            scoreManagerScript.UpdateLastScore(points);
+            SceneManager.LoadScene("TitleScene", LoadSceneMode.Single);
         }
     }
 
@@ -197,6 +211,41 @@ public class GameManager : MonoBehaviour
         centerStage.enabled = false;
         PlayerMovement playerMovementScript = player.GetComponent<PlayerMovement>();
         playerMovementScript.SetMovementProperty(true);
+
         currentGameState = holdDeathGameState;
     }
+    
+
+    //function: InitScene
+    //purpose: Shows Stage Number and does the respawn process (first one)
+    void InitScene()
+    {
+        centerStage.enabled = true;
+        centerStage.text = ("STAGE 1"); //TODO: Use stage numbers
+        SetRespawning();
+        holdDeathGameState = gameState.spawningEnemies;
+    }
+
+    //function: CheckRemainingaAliens
+    //purpose: Checks to see if there are still aliens in the current scnee.
+    //If all aliens have been destroyed, will set up the next stage.  
+    void CheckRemainingaAliens()
+    {
+        if (alienManifestScript.GetNumberOfAliveAliens() <= 0 && currentGameState == gameState.enemiesAttacking)
+        {
+            currentGameState = gameState.idle;
+            //TODO: Implement Next Scene Behavior Here
+            centerStage.enabled = true;
+            centerStage.text = ("COMPLETE DEMO!");
+        }
+    }
+
+    //function: SetHighScoreText
+    //purpose: Sets HiScore text in the HUD 
+    void SetHighScoreText()
+    {
+        PlayerPrefs.GetInt("highscore", highScore);
+        hiScoreText.text = highScore.ToString();
+    }
+    
 }
