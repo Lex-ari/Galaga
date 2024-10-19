@@ -3124,7 +3124,7 @@ MonoBehaviour:
   playerStartPosition: {x: 0, y: -4, z: 0}
   points: 0
   currentGameState: 4
-  lives: 1
+  lives: 3
 --- !u!4 &1324263248
 Transform:
   m_ObjectHideFlags: 0

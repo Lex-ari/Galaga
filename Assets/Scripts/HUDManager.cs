@@ -24,6 +24,11 @@ public class HUDManager : MonoBehaviour
     public TMP_Text hiscoreText;
     public TMP_Text pushSpaceKeyText;
 
+    public TMP_Text lastScoreText;
+    public TMP_Text lastScoreHeader;
+
+    public TMP_Text megaTitle;
+
     private float timeElapsedFromStart = 0;
 
     private ScoreManager scoreManagerScript;
@@ -36,6 +41,7 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         UpdateHighScore();
+        UpdateLastScore();
     }
 
     // Update is called once per frame
@@ -77,5 +83,14 @@ public class HUDManager : MonoBehaviour
     //purpose: Updates the Last Score Text
     void UpdateLastScore()
     {
+        int score = scoreManagerScript.GetLastScore();
+        Debug.Log("last score: " + score);
+        if (score >= 0)
+        {
+            lastScoreHeader.enabled = true;
+            lastScoreText.enabled = true;
+            lastScoreText.text = score.ToString();
+            megaTitle.text = "GAME OVER";
+        }
     }
 }

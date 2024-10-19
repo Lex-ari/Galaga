@@ -176,9 +176,10 @@ public class GameManager : MonoBehaviour
     //purpose: This waits for the scene to "clean up" and do a respawn. 
     IEnumerator RespawnHandler()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(3.0f);
         if (lives > 0)
         {
+            yield return new WaitForSeconds(3.0f);
             // Debug.Log("Respawn Handler Spawning Player");
             GameObject player = SpawnPlayer();
             StartCoroutine(StartStageProcess(player));
@@ -186,9 +187,7 @@ public class GameManager : MonoBehaviour
         }
         else 
         {
-            // gameover
-            scoreManagerScript.UpdateLastScore(points);
-            SceneManager.LoadScene("TitleScene", LoadSceneMode.Single);
+            StartCoroutine(WaitAndSendToTitle());
         }
     }
 
@@ -237,7 +236,15 @@ public class GameManager : MonoBehaviour
             //TODO: Implement Next Scene Behavior Here
             centerStage.enabled = true;
             centerStage.text = ("COMPLETE DEMO!");
+            StartCoroutine(WaitAndSendToTitle());
         }
+    }
+
+    IEnumerator WaitAndSendToTitle()
+    {
+        yield return new WaitForSeconds(2.0f);
+        scoreManagerScript.UpdateLastScore(points);
+        SceneManager.LoadScene("TitleScene", LoadSceneMode.Single);
     }
 
     //function: SetHighScoreText

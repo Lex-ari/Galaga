@@ -23,7 +23,7 @@ public class ScoreManager : MonoBehaviour
 
     private HUDManager hudManager;
     private int highScore;
-    private int lastScore;
+    private int lastScore = -1;
 
     public static ScoreManager instance = null;
 
