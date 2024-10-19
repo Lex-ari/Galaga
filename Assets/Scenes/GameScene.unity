@@ -310,6 +310,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &94581790
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +358,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &111191198
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +406,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &119733471
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,6 +485,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &142263472
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +564,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &177488737
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +718,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &262268785
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +766,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &278997060
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,6 +845,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 0
   colorPosition: 0
+  groupAttackId: 1
 --- !u!1 &315200958
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +924,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &336255779
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,6 +1003,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &348301353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,6 +1082,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &362442303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1172,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 2
 --- !u!1 &430975004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,6 +1768,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &624358462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1816,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &655402280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +1864,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &730109098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,6 +1912,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &742261998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2068,6 +2084,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 2
 --- !u!1 &825751071
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,6 +2245,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &913095728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,6 +2619,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1081895673
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,6 +2751,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 3
 --- !u!1 &1190471513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,6 +2911,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &1264159756
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,6 +3043,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 1
   colorPosition: 0
+  groupAttackId: 3
 --- !u!1 &1288210387
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,6 +3240,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &1355114597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,6 +3288,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 3
 --- !u!1 &1382854404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,6 +3398,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1433214579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3514,6 +3539,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1523210823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,6 +3649,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &1548300769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,6 +3697,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1564544191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3748,6 +3776,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1634631924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,6 +4020,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 0
   colorPosition: 0
+  groupAttackId: 2
 --- !u!1 &1719781756
 GameObject:
   m_ObjectHideFlags: 0
@@ -4038,6 +4068,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &1725121325
 GameObject:
   m_ObjectHideFlags: 0
@@ -4307,6 +4338,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 4
 --- !u!1 &1818230219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4385,6 +4417,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &1880963351
 GameObject:
   m_ObjectHideFlags: 0
@@ -4432,6 +4465,7 @@ MonoBehaviour:
   popUpGroup: 2
   sidePosition: 1
   colorPosition: 0
+  groupAttackId: 4
 --- !u!1 &1890153085
 GameObject:
   m_ObjectHideFlags: 0
@@ -4479,6 +4513,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 0
   colorPosition: 2
+  groupAttackId: 1
 --- !u!1 &1891368176
 GameObject:
   m_ObjectHideFlags: 0
@@ -4526,6 +4561,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1903710219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4573,6 +4609,7 @@ MonoBehaviour:
   popUpGroup: 4
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &1918641347
 GameObject:
   m_ObjectHideFlags: 0
@@ -4756,6 +4793,7 @@ MonoBehaviour:
   popUpGroup: 1
   sidePosition: 1
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1 &2030528665
 GameObject:
   m_ObjectHideFlags: 0
@@ -4999,6 +5037,7 @@ MonoBehaviour:
   popUpGroup: 3
   sidePosition: 1
   colorPosition: 2
+  groupAttackId: 0
 --- !u!1 &2081921164
 GameObject:
   m_ObjectHideFlags: 0
@@ -5108,6 +5147,7 @@ MonoBehaviour:
   popUpGroup: 5
   sidePosition: 0
   colorPosition: 1
+  groupAttackId: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

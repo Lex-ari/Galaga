@@ -16,10 +16,10 @@ using UnityEngine;
 public class EnemyMissile : MonoBehaviour
 {
 
-    public float timeBetweenShots = 0.2f;
+    const float TIME_BETWEEN_SHOTS = 0.2f;
 
     public GameObject missilePrefab;
-    public Vector3 missileOffset = new Vector3(0, 0f, 0);
+    public Vector3 missileOffset = new Vector3(0, -1f, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,7 @@ public class EnemyMissile : MonoBehaviour
     IEnumerator FireTwice()
     {
         FireOnce();
-        yield return new WaitForSeconds(timeBetweenShots);
+        yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
         FireOnce();
     }
 

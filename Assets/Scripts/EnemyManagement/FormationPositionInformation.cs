@@ -26,13 +26,11 @@ public enum side {
 public class FormationPositionInformation : MonoBehaviour
 {
     public int popUpGroup;
-    
 
     public side sidePosition;
-
- 
-
     public alienColor colorPosition;
+
+    public int groupAttackId;
 
 
     // Start is called before the first frame update
@@ -57,5 +55,9 @@ public class FormationPositionInformation : MonoBehaviour
 
     public alienColor GetColor(){
         return colorPosition;
+    }
+
+    public int GetGroupAttackId(){
+        return groupAttackId;
     }
 }

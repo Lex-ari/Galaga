@@ -28,6 +28,8 @@ public class AttackManager : MonoBehaviour
     public bool active = false;
     
     private int attackPattern = 1;
+
+    private bool doRandomAttacks = false;
     
 
     // Start is called before the first frame update
@@ -57,46 +59,77 @@ public class AttackManager : MonoBehaviour
     //purpose: Lists out different enemy attack patterns and cycles through
     //them when called.
     IEnumerator ConfigureAndStartAttackPattern()
-    {
-        if (attackPattern == 0)
+    {   bool attackA = false;
+        bool attackB = false;
+        bool attackC = true;
+        for (int i = 0; i < 5; i++)
         {
-            attackPattern = Random.Range(1, 5);
-        }
-        if (attackPattern == 1)
-        {
-            EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
-            yield return new WaitForSeconds(0.5f);
-            EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
-        }
-        if (attackPattern == 2)
-        {
-            EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
-            yield return new WaitForSeconds(1.0f);
-            EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
-        }
-        if (attackPattern == 3)
-        {
-            EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
-            yield return new WaitForSeconds(1.0f);
-            EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
-        }
-        if (attackPattern == 4)
-        {
-            EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
-            yield return new WaitForSeconds(0.5f);
-            EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
-        }
-        attackPattern++;
-        if (attackPattern > 4)
-        {
-            attackPattern = 0;
+            if (doRandomAttacks)
+            {
+                attackPattern = Random.Range(1, 5);
+            }
+            if (attackPattern == 1)
+            {
+                attackA = EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
+                yield return new WaitForSeconds(0.5f);
+                attackB = EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
+            }
+            if (attackPattern == 2)
+            {
+                attackA = EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
+                yield return new WaitForSeconds(1.0f);
+                attackB = EnemyStartAttack(alienColor.yellow, side.left, 0, attackPatternYellowL);
+            }
+            if (attackPattern == 3)
+            {
+                attackA = EnemyStartAttack(alienColor.red, side.left, 0, attackPatternRedL);
+                yield return new WaitForSeconds(1.0f);
+                attackB = EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
+            }
+            if (attackPattern == 4)
+            {
+                attackA = EnemyStartAttack(alienColor.red, side.right, 0, attackPatternRedR);
+                yield return new WaitForSeconds(0.5f);
+                attackB = EnemyStartAttack(alienColor.yellow, side.right, 0, attackPatternYellowR);
+            }
+            attackPattern++;
+            if (attackPattern > 4)
+            {
+                doRandomAttacks = true;
+            }   
+            if (doRandomAttacks)
+            {
+                attackPattern = Random.Range(5, 9);
+
+                if (attackPattern == 5)
+                {
+                    attackC = EnemyStartAttack(1, attackPatternRedL);
+                }
+                if (attackPattern == 6)
+                {
+                    attackC = EnemyStartAttack(2, attackPatternRedL);
+                }
+                if (attackPattern == 7)
+                {
+                    attackC = EnemyStartAttack(3, attackPatternRedR);
+                }
+                if (attackPattern == 8)
+                {
+                    attackC = EnemyStartAttack(4, attackPatternRedR);
+                }                           
+            }
+            bool attacked = attackA && attackB && attackC;
+            if (attacked)
+            {
+                break;
+            }
         }
     }
 
     //function: EnemyStartAttack
     //purpose: Retrieves an attacking unit and sets its attack pattern
     //according to the color and position in its formation.
-    void EnemyStartAttack(alienColor color, side sidePosition, int groupId, GameObject attackPattern)
+    bool EnemyStartAttack(alienColor color, side sidePosition, int groupId, GameObject attackPattern)
     {
         GameObject attacker = alienManifestScript.GetAlienFittingParamters(color, sidePosition, groupId);
         if (attacker != null)
@@ -105,10 +138,33 @@ public class AttackManager : MonoBehaviour
             attackerMovement.SetAttackPattern(attackPattern);
             attackerMovement.Attack();
             StartCoroutine(ShootWhileAttack(attacker));
+            return true;
         }
-
+        return false;
     }
 
+    //function: EnemyStartAttack
+    //purpose: Retrieves an attacking group unit and sets its attack pattern
+    //according to the color and position in its formation.
+    bool EnemyStartAttack(int groupId, GameObject attackPattern)
+    {
+        List<GameObject> attackers = alienManifestScript.GetAliensFittingGroupId(groupId);
+        if (attackers.Count > 0)
+        {
+            foreach (GameObject attacker in attackers)
+            {
+                EnemyMovement attackerMovement = attacker.GetComponent<EnemyMovement>();
+                attackerMovement.SetAttackPattern(attackPattern);
+                attackerMovement.Attack();
+                StartCoroutine(ShootWhileAttack(attacker));           
+            }
+            return true;
+        }
+        return false;
+    }
+
+    //funciton ShootWhileAttack
+    //purpose: Sets an attack to do its attack pattern.
     IEnumerator ShootWhileAttack(GameObject attacker)
     {
         EnemyMissile missleShoot = attacker.GetComponent<EnemyMissile>();

@@ -73,6 +73,27 @@ public class AlienManifest : MonoBehaviour
         return null;
     }
 
+    //function: GetAliensFittingGroupId
+    //purpose: Gets aliens that are part of a group attack.
+    public List<GameObject> GetAliensFittingGroupId(int groupId)
+    {
+        List<GameObject> groupAttackers = new List<GameObject>();
+        for (int i = alienManifest.Count - 1; i >= 0; i--)
+        {
+            EnemyMovement enemyMovement = alienManifest[i].GetComponent<EnemyMovement>();
+            FormationPositionInformation posInfo = enemyMovement.GetFormationPosition().GetComponent<FormationPositionInformation>();
+            if (posInfo.GetGroupAttackId() == groupId)
+            {
+                if (enemyMovement.GetState() != EnemyMovement.state.attacking)
+                {
+                    groupAttackers.Add(alienManifest[i]);
+                }
+
+            }           
+        }
+        return groupAttackers;
+    }
+
     //function: IsRecentOrNotMinimum
     //purpose: A check to see if an alien object has been recently used.
     //This is to avoid the same alien attacking and allow new ones to perform.

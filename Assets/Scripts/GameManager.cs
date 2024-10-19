@@ -210,6 +210,8 @@ public class GameManager : MonoBehaviour
         centerStage.enabled = false;
         PlayerMovement playerMovementScript = player.GetComponent<PlayerMovement>();
         playerMovementScript.SetMovementProperty(true);
+        PlayerMissile playerMissileScript = player.GetComponent<PlayerMissile>();
+        playerMissileScript.SetArmLockProperty(true);
 
         currentGameState = holdDeathGameState;
     }
